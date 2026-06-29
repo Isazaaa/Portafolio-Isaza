@@ -45,13 +45,24 @@ export default function Hero() {
         transition={{ delay: 1.6, duration: 0.6, ease: EASE }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
+        {/* Desktop: a mouse with a scrolling wheel */}
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          className="flex h-10 w-6 items-start justify-center rounded-full border border-[var(--color-border)] p-1.5"
+          className="hidden h-10 w-6 items-start justify-center rounded-full border border-[var(--color-border)] p-1.5 md:flex"
         >
           <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-muted)]" />
         </motion.div>
+
+        {/* Mobile: a phone with a swipe-up hint */}
+        <div className="flex h-11 w-[1.7rem] flex-col items-center rounded-[0.55rem] border border-[var(--color-border)] p-1 md:hidden">
+          <span className="mt-0.5 h-0.5 w-2.5 rounded-full bg-[var(--color-border)]" />
+          <motion.span
+            animate={{ y: [3, -3, 3], opacity: [0.3, 1, 0.3] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+            className="mb-1 mt-auto h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]"
+          />
+        </div>
       </motion.div>
     </section>
   );

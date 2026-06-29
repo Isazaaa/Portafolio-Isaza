@@ -197,7 +197,7 @@ export default function Header() {
       >
         <button
           onClick={() => setMobileOpen(true)}
-          className="flex items-center gap-2.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)]/80 px-4 py-2.5 text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--color-muted)] shadow-lg shadow-[var(--color-base)/50] backdrop-blur-xl transition-all duration-300 active:scale-90"
+          className="flex items-center gap-2.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)]/95 px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--color-ink)] shadow-lg shadow-[var(--color-base)/50] backdrop-blur-xl transition-all duration-300 active:scale-90"
           aria-label="Abrir navegación"
         >
           <motion.span
@@ -257,7 +257,7 @@ export default function Header() {
                     className={`flex items-center gap-3 rounded-xl px-4 py-3.5 text-left text-base font-semibold tracking-tight transition-all duration-200 ${
                       active === item.id
                         ? "bg-[var(--color-accent-soft)] text-[var(--color-accent)]"
-                        : "text-[var(--color-muted)] hover:bg-[var(--color-surface-2)] hover:text-[var(--color-ink)]"
+                        : "text-[var(--color-ink)] active:bg-[var(--color-surface-2)]"
                     }`}
                   >
                     <span
