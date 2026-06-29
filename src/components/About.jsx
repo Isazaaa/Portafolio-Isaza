@@ -63,23 +63,13 @@ export default function About() {
               delay={0.1}
               className="mt-6 max-w-xl text-base leading-relaxed text-ink"
             >
-              Soy desarrollador Full-Stack apasionado por construir software que
-              no solo funcione, sino que se sienta bien al usarlo. Me obsesiono
-              con los detalles — desde cómo responde un botón hasta cómo se
-              estructura una API — porque creo que la calidad está en lo que no
-              se nota a simple vista.
-            </Reveal>
-
-            <Reveal
-              as="p"
-              delay={0.15}
-              className="mt-4 max-w-xl text-base leading-relaxed text-ink"
-            >
-              Disfruto trabajar en cada capa de una aplicación: diseñar
-              interfaces limpias, construir lógica de negocio sólida y
-              asegurarme de que todo funcione rápido, sin fricción y sin
-              sorpresas. Cada proyecto es una oportunidad para hacer las cosas
-              bien.
+              Soy desarrollador Full-Stack apasionado por crear experiencias web
+              únicas y diseños a la medida. Mi objetivo es convertir tus ideas
+              en software real, sin perder calidad en el camino. Disfruto
+              trabajar en cada capa de una aplicación: diseñar interfaces
+              limpias, construir lógica sólida y asegurarme de que todo
+              funcione rápido, sin fricción y sin sorpresas. Cada proyecto es
+              una oportunidad para hacer las cosas bien.
             </Reveal>
 
             <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
