@@ -54,8 +54,8 @@ export default function About() {
               delay={0.05}
               className="text-balance text-[clamp(1.8rem,4vw,3rem)] font-extrabold leading-tight tracking-tight"
             >
-              Construyo software que se siente{" "}
-              <span className="text-[var(--color-accent)]">rápido, claro y vivo.</span>
+              Código bien hecho{" "}
+              <span className="text-[var(--color-accent)]">desde el primer clic.</span>
             </Reveal>
 
             <Reveal
