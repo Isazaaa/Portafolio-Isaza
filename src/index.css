@@ -2,47 +2,50 @@
 
 /* ----------------------------------------------------------------------------
    Design tokens — the single source of truth for the art direction.
-   Swap --color-accent here to re-skin the whole site (mint / electric blue / cyan).
+
+   Warm paper ground, ink-on-paper text, one muted green accent. Colours are
+   authored in OKLCH so lightness steps are perceptually even: bumping the L
+   channel by 0.02 looks like the same step everywhere on the ramp.
+
+   Swap --color-accent to re-skin the whole site.
 ---------------------------------------------------------------------------- */
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-sans: "Libre Franklin", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-  /* Elegant dark palette — dark gray, never pure black */
-  --color-base: #0a0a0c;
-  --color-surface: #111114;
-  --color-surface-2: #18181c;
-  --color-border: #26262c;
+  /* Paper ramp — warm off-white, never pure white as the ground */
+  --color-base: oklch(0.972 0.008 85);
+  --color-surface: oklch(0.985 0.006 85);
+  --color-card: oklch(1 0 0);
 
-  --color-ink: #f5f5f7; /* pure-ish white, primary text */
-  --color-muted: #a1a1aa; /* secondary text */
-  --color-faint: #6b6b76; /* tertiary / captions */
+  --color-border: oklch(0.90 0.008 80);
+  --color-border-strong: oklch(0.86 0.010 80);
 
-  /* Single vibrant-but-professional accent (mint) */
-  --color-accent: #4ef0c0;
-  --color-accent-soft: #4ef0c01a;
+  /* Ink ramp — all three clear WCAG AA on the paper ground */
+  --color-ink: oklch(0.22 0.012 70);
+  --color-muted: oklch(0.40 0.012 70);
+  --color-faint: oklch(0.50 0.012 70);
 
-  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Single accent, muted enough to sit on paper without vibrating */
+  --color-accent: oklch(0.52 0.12 145);
+  --color-accent-soft: oklch(0.94 0.035 145);
+
+  /* Dark block — video frames and the primary button. The one place the page
+     goes to ink, so screen work reads as screen work. */
+  --color-deep: oklch(0.20 0.012 70);
+  --color-deep-2: oklch(0.28 0.012 70);
+
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Register the accent as a real <color> so the browser can INTERPOLATE it.
-   Lets the logo's accent-cycle tween smoothly instead of cutting. Browsers
-   without @property support just fall back to an instant swap. */
-@property --color-accent {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: #4ef0c0;
-}
-@property --color-accent-soft {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: #4ef0c01a;
-}
+/* The accent is swapped at runtime by writing --color-accent on <html>
+   (see lib/accent.js).
 
-:root {
-  transition:
-    --color-accent 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-    --color-accent-soft 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
+   Note for future-me: do NOT register these with @property and transition them
+   on :root. That combination leaves the COMPUTED value pinned at the initial
+   colour — the inline style updates, localStorage updates, React updates, and
+   nothing on screen changes. Elements transition their own colour instead,
+   which is simpler and actually works. */
 
 @layer base {
   * {
@@ -59,16 +62,33 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    overflow-x: hidden;
+    /* `clip`, not `hidden`: hidden turns <body> into a scroll container, which
+       desyncs window.scrollTo and breaks sticky positioning. clip trims the
+       horizontal overflow without establishing one. */
+    overflow-x: clip;
   }
 
-  /* Subtle selection in accent */
+  /* Smooth the palette swap without transitioning the custom property itself */
+  a,
+  button,
+  [class*="accent"] {
+    transition:
+      color 0.35s ease,
+      background-color 0.35s ease,
+      border-color 0.35s ease;
+  }
+
   ::selection {
-    background: var(--color-accent);
-    color: #06120e;
+    background: var(--color-accent-soft);
+    color: var(--color-ink);
   }
 
-  /* Minimal, on-brand scrollbar */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
   ::-webkit-scrollbar {
     width: 10px;
   }
@@ -76,69 +96,115 @@
     background: var(--color-base);
   }
   ::-webkit-scrollbar-thumb {
-    background: var(--color-surface-2);
+    background: var(--color-border-strong);
     border-radius: 999px;
     border: 2px solid var(--color-base);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-border);
+    background: var(--color-faint);
   }
 }
 
 @layer utilities {
   /* Section rhythm — generous negative space so each block breathes */
   .section-pad {
-    padding-block: clamp(5rem, 12vw, 9rem);
+    padding-block: clamp(4.5rem, 10vw, 7rem);
   }
 
   .container-page {
     width: 100%;
-    max-width: 76rem;
+    max-width: 70rem;
     margin-inline: auto;
-    padding-inline: clamp(1.25rem, 5vw, 3rem);
+    padding-inline: clamp(1.25rem, 5vw, 2.5rem);
   }
 
-  /* Faint grid texture for depth without noise */
-  .bg-grid {
-    background-image:
-      linear-gradient(to right, var(--color-border) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--color-border) 1px, transparent 1px);
-    background-size: 64px 64px;
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 80%);
+  /* Uppercase mono section label — the only section-heading device on the site */
+  .label-mono {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-faint);
   }
 
-  .text-balance {
-    text-wrap: balance;
+  /* Hero layer stack: each row steps right, but only where there is room */
+  .layer-step {
+    transform: none;
+  }
+  @media (min-width: 768px) {
+    .layer-step {
+      transform: translateX(var(--step, 0px));
+    }
   }
 
-  /* Slow drift for the monumental text gradient */
-  @keyframes drift {
-    0%, 100% { background-position: 0% 0%; }
-    50%      { background-position: 100% 100%; }
-  }
-  .animate-drift {
-    animation: drift 12s ease-in-out infinite;
-    background-size: 200% 200%;
+  /* Nav segments become a scale map of the document from md up: each one is
+     sized to its section's share of the page. Below md there is not enough
+     room for that to be readable, so links keep their natural width. */
+  @media (min-width: 768px) {
+    .nav-seg {
+      flex: var(--share, 1) 1 0%;
+    }
   }
 
-  /* Touch-device title: a band of accent light sweeps across the headline.
-     The mask reveals only the moving stripe, so the bright base stays readable. */
-  @keyframes title-sheen {
-    0%   { -webkit-mask-position: 130% 0; mask-position: 130% 0; }
-    100% { -webkit-mask-position: -30% 0; mask-position: -30% 0; }
+  /* Horizontal nav on small screens scrolls, but without a visible bar */
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
-  .title-sheen {
-    -webkit-mask-image: linear-gradient(100deg, transparent 42%, #000 50%, transparent 58%);
-    mask-image: linear-gradient(100deg, transparent 42%, #000 50%, transparent 58%);
-    -webkit-mask-size: 250% 100%;
-    mask-size: 250% 100%;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    animation: title-sheen 3.4s ease-in-out infinite alternate;
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Film-grain stripe behind video frames that have no poster yet */
+  .film-stripe {
+    background-image: repeating-linear-gradient(
+      115deg,
+      oklch(1 0 0 / 0.16) 0 1px,
+      transparent 1px 9px
+    );
   }
 }
 
-/* Respect users who ask for less motion */
+/* ----------------------------------------------------------------------------
+   Scroll reveals.
+
+   Nothing is hidden until JavaScript adds `reveal-armed` to <html> — and it
+   only does that after confirming it can observe (see lib/useScrollReveal.js).
+   With no JS, a stalled observer, or a crawler, every block renders visible.
+---------------------------------------------------------------------------- */
+.reveal-armed [data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0s),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0s);
+}
+
+.reveal-armed [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Load-sequence keyframes. Scroll reveals run through Motion in JS; these cover
+   the first paint, which must not wait for hydration. */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes wipe-in {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes blink-soft {
+  0%, 55%   { opacity: 1; }
+  56%, 100% { opacity: 0.2; }
+}
+
+/* Respect users who ask for less motion. This is the OS-level setting and is
+   deliberately separate from the in-page motion control — someone who set it
+   system-wide should never have to go find a toggle. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
