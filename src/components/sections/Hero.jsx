@@ -19,13 +19,13 @@ export default function Hero() {
         Desarrollador Full-Stack · Medellín, Colombia
       </p>
 
-      {/* Long enough that it needs a slightly tighter measure and size than a
-          short headline would, so it still lands as one block of type. */}
+      {/* Short enough to run large: the measure is tight so it breaks into two
+          balanced lines rather than one thin ribbon across the column. */}
       <h1
-        className="max-w-[15ch] text-[clamp(2.4rem,6.4vw,5rem)] leading-[0.98] font-semibold tracking-[-0.035em] text-balance"
+        className="max-w-[13ch] text-[clamp(2.8rem,7.6vw,5.8rem)] leading-[0.95] font-semibold tracking-[-0.035em] text-balance"
         style={{ animation: "wipe-in 0.9s 0.15s both cubic-bezier(0.16,1,0.3,1)" }}
       >
-        Del boceto a producción
+        De la idea al primer clic
       </h1>
 
       <div className="mt-12 grid items-end gap-10 md:mt-14 md:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] md:gap-12">

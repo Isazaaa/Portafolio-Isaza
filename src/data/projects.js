@@ -93,7 +93,7 @@ export const projects = [
     image: "/projects/escuela-riqueza.webp",
     summary:
       "Escuela digital de Iván Mazo, con formato tipo Platzi. Enseña seis inteligencias —mental, riqueza, emocional, comercial, estratégica y espiritual— sobre una ruta de aprender, practicar y transformar.",
-    note: "El proyecto donde más me cuidé la espalda: TypeScript, esquemas validados y pruebas. Con gente usándolo de verdad, adivinar sale caro.",
+    note: "Una plataforma con significado",
     stack: ["TypeScript", "React", "Supabase", "Stripe", "Cloudflare Stream", "TanStack Query"],
 
     // What holds it up.

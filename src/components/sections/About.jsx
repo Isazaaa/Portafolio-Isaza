@@ -30,10 +30,8 @@ export default function About() {
               delay={0.06}
               className="max-w-[52ch] text-base leading-relaxed text-muted text-pretty"
             >
-              Empecé haciendo sitios para que otros mostraran su trabajo.
-              Terminé sosteniendo la plataforma interna de una cadena de
-              supermercados: decenas de módulos, un ERP detrás y gente entrando
-              todos los días.
+              Me gusta crear experiencias web con diseños a la medida y
+              convertir tus ideas en algo que valga la pena mostrar.
             </Reveal>
 
             <Reveal
@@ -41,8 +39,10 @@ export default function About() {
               delay={0.1}
               className="max-w-[52ch] text-base leading-relaxed text-muted text-pretty"
             >
-              Esa plataforma me enseñó a construir cosas que aguantan. Los
-              portafolios me enseñaron a que se vean bien.
+              Disfruto trabajar en cada capa de una aplicación: diseñar la
+              interfaz, construir lo que hay detrás y asegurarme de que todo
+              funcione rápido. Es la parte del trabajo con la que se me va la
+              tarde sin darme cuenta.
             </Reveal>
 
             {/* The closing line is the point of the section, so it gets the
@@ -50,9 +50,10 @@ export default function About() {
             <Reveal
               as="p"
               delay={0.14}
-              className="max-w-[24ch] border-l-2 border-accent pl-4 text-[clamp(1.1rem,1.9vw,1.35rem)] leading-snug font-semibold tracking-[-0.015em] text-ink text-balance"
+              className="max-w-[34ch] border-l-2 border-accent pl-4 text-[clamp(1.05rem,1.7vw,1.25rem)] leading-snug font-semibold tracking-[-0.015em] text-ink text-balance"
             >
-              Trato de no soltar ninguna de las dos.
+              Pero lo que más me importa es que la persona para la que lo hago
+              quede contenta con el resultado.
             </Reveal>
           </div>
         </div>
