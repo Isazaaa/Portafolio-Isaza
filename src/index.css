@@ -155,6 +155,25 @@
     display: none;
   }
 
+  /* Halftone dot field — an echo of the particle portrait, one section only.
+     Two offset grids rather than one so the field reads hand-set instead of
+     mechanical, masked so it drifts in from the right edge and never sits
+     under the text as flat wallpaper. */
+  .dot-field {
+    background-image:
+      radial-gradient(var(--color-accent) 1.4px, transparent 1.5px),
+      radial-gradient(var(--color-accent) 0.9px, transparent 1px);
+    background-size:
+      18px 18px,
+      18px 18px;
+    background-position:
+      0 0,
+      9px 9px;
+    opacity: 0.13;
+    -webkit-mask-image: radial-gradient(ellipse 62% 85% at 100% 55%, #000 5%, transparent 72%);
+    mask-image: radial-gradient(ellipse 62% 85% at 100% 55%, #000 5%, transparent 72%);
+  }
+
   /* Film-grain stripe behind video frames that have no poster yet */
   .film-stripe {
     background-image: repeating-linear-gradient(

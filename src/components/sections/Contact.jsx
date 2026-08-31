@@ -1,10 +1,24 @@
 import Reveal from "../ui/Reveal.jsx";
 import { contact } from "../../data/services.js";
 
+/**
+ * Contacto.
+ *
+ * The last thing a visitor reads, and the plainest block on the site. The dot
+ * field behind it is the one echo of the particle portrait: texture, not a
+ * second figure, so it belongs to the same family without repeating the moment
+ * that makes "sobre mí" work. It drifts in from the right, where the layout is
+ * empty anyway, and never gets dense enough to sit under the text.
+ */
 export default function Contact() {
   return (
-    <section id="contacto" className="section-pad border-t border-border">
-      <div className="container-page">
+    <section
+      id="contacto"
+      className="section-pad relative overflow-hidden border-t border-border"
+    >
+      <div aria-hidden className="dot-field pointer-events-none absolute inset-0" />
+
+      <div className="container-page relative">
         <Reveal as="h2" className="label-mono mb-8">
           Contacto
         </Reveal>

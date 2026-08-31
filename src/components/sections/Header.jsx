@@ -127,13 +127,15 @@ export default function Header() {
               >
                 <span className="block truncate">{item.label}</span>
 
-                {/* Track: as wide as this section's share of the document */}
-                <span
-                  aria-hidden
-                  className="absolute inset-x-0 bottom-0 block h-[2px] rounded-full bg-border"
-                >
+                {/* Guide rail + fill. The rail has to be drawn: the segment
+                    widths are the map, and without a visible track there is
+                    nothing to read them against until you have already walked
+                    past. It is half the thickness of the fill so it reads as a
+                    rail with a line drawn over it, not as four underlines. */}
+                <span aria-hidden className="absolute inset-x-0 bottom-0 block h-[2px]">
+                  <span className="absolute inset-x-0 bottom-0 block h-px rounded-full bg-border" />
                   <span
-                    className={`block h-full rounded-full transition-[width] duration-200 ease-out-soft ${
+                    className={`absolute bottom-0 left-0 block h-[2px] rounded-full transition-[width] duration-200 ease-out-soft ${
                       isActive ? "bg-accent" : "bg-border-strong"
                     }`}
                     style={{ width: isActive ? `${within * 100}%` : passed ? "100%" : "0%" }}
