@@ -85,12 +85,8 @@ export default function Hero() {
               reveal that the Trabajo section is built around: by the time a
               visitor got down there, the domains would already be old news. */}
           <div className="mt-7 border-t border-border pt-5">
-            <p className="font-mono text-[11px] tracking-[0.06em] text-faint uppercase">
-              En producción
-            </p>
-            <p className="mt-2.5 max-w-[30ch] text-sm leading-relaxed text-muted text-pretty">
-              Tres proyectos en línea, con gente entrando todos los días.
-            </p>
+           
+           
           </div>
         </div>
       </div>
